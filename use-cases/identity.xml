@@ -6,72 +6,26 @@
 	</graph>
 
 	<predicates>
-		<size>27</size>
-		<alias symbol="0">knows</alias>
-		<alias symbol="1">hasInterest</alias>
-		<alias symbol="2">hasModerator</alias>
-		<alias symbol="3">hasMember</alias>
-		<alias symbol="4">studyAt</alias>
-		<alias symbol="5">worksAt</alias>
-		<alias symbol="6">isLocatedIn</alias>
-		<alias symbol="7">isPartOf</alias>
-		<alias symbol="8">likes</alias>
-		<alias symbol="9">hasCreator</alias>
-		<alias symbol="10">containerOf</alias>
-		<alias symbol="11">hasTag</alias>
-		<alias symbol="12">hasType</alias>
-		<alias symbol="13">isSubclassOf</alias>
-		<alias symbol="14">replyOf</alias>
-		<alias symbol="15">creationDate</alias>
-		<alias symbol="16">name</alias>
-		<alias symbol="17">gender</alias>
-		<alias symbol="18">birthday</alias>
-		<alias symbol="19">email</alias>
-		<alias symbol="20">speaks</alias>
-		<alias symbol="21">browserUsed</alias>
-		<alias symbol="22">locationIP</alias>
-		<alias symbol="23">content</alias>
-		<alias symbol="24">language</alias>
-		<alias symbol="25">imageFile</alias>
-		<alias symbol="26">length</alias>
+		<size>2</size>
+		<alias symbol="0">hasIdentity</alias>
+		<alias symbol="1">hasHousehold</alias>
 	</predicates>
 
 	<types>
-		<size>15</size>		
-		<alias type="0">Person</alias>
-		<alias type="1">University</alias>
-		<alias type="2">Company</alias>
-		<alias type="3">City</alias>
-		<alias type="4">Country</alias>
-		<alias type="5">Continent</alias>
-		<alias type="6">Forum</alias>
-		<alias type="7">Tag</alias>
-		<alias type="8">TagClass</alias>
-		<alias type="9">Post</alias>
-		<alias type="10">Comment</alias>
-		<alias type="11">Message</alias>
-		<alias type="12">String</alias>
-		<alias type="13">Integer</alias>
-		<alias type="14">DateTime</alias>
+		<size>4</size>		
+		<alias type="0">Observation</alias>
+		<alias type="1">Identity</alias>
+		<alias type="2">Individual</alias>
+		<alias type="3">Household</alias>
 	</types>
 
-
-
-
 	<schema>
-		<source type="0"> <!-- Person -->
-			<target type="14" symbol="15" multiplicity="1"/>
-			<target type="12" symbol="16" multiplicity="1"/>
-			<target type="12" symbol="17" multiplicity="1"/>
-			<target type="14" symbol="18" multiplicity="1"/>
-			<target type="12" symbol="19" multiplicity="*"/>
-			<target type="12" symbol="20" multiplicity="*"/>
-			<target type="12" symbol="21" multiplicity="1"/>
-			<target type="12" symbol="22" multiplicity="1"/>
+		<source type="0"> <!-- Observation -->
 
-			<target type="0" symbol="0" multiplicity="*"> <!-- knows -->
-				<indistribution type="zipfian">
-					<alpha>2.5</alpha>
+			<target type="0" symbol="0" multiplicity="1"> <!-- hasIdentity -->
+				<indistribution type="uniform">
+					<min>1</min>
+					<max>1</max>
 				</indistribution>
 				<outdistribution type="zipfian">
 					<alpha>2.5</alpha>

@@ -28,7 +28,7 @@ int parse_config(const string & filename, config::config & conf) {
     }
 //    pugi::xml_node graph_node = root.child("graph");
 
-    if (conf.nb_nodes[0] == -1) {
+    if (conf.nb_nodes[0] == 0) {
     	conf.nb_nodes.resize(conf.nb_graphs);
     	conf.nb_edges.resize(conf.nb_graphs);
 
@@ -37,9 +37,9 @@ int parse_config(const string & filename, config::config & conf) {
 			if (i >= conf.nb_graphs) {
 				cout << "Number of graphs is greater than specified by the size" << endl;
 			}
-			conf.nb_nodes[i] = graph_node.child("nodes").text().as_uint();
+			conf.nb_nodes[i] = graph_node.child("nodes").text().as_ullong();
 //			cout << "Graph " << i << ": " << conf.nb_nodes[i] << endl;
-			conf.nb_edges[i] = graph_node.child("edges").text().as_uint();
+			conf.nb_edges[i] = graph_node.child("edges").text().as_ullong();
 			i++;
 		}
     }
@@ -60,9 +60,6 @@ int parse_config(const string & filename, config::config & conf) {
     if (!schema.empty()) {
         parse_schema(schema, conf);
     }
-    
-
-    parse_workloads(root, conf);
     
     return 1;
 }
@@ -204,14 +201,6 @@ void parse_schema(pugi::xml_node node, config::config & conf) {
             	}
             }
 
-            pugi::xml_node corr = target_node.child("correlation");
-			vector<int> correlatedWith(0);
-            for(pugi::xml_node edgeType: corr.children("edge_type")) {
-				int edgeTypeId = edgeType.text().as_uint();
-				correlatedWith.push_back(edgeTypeId);
-			}
-
-
             if (multiplicity == '1') { // && outdistribution.type == DISTRIBUTION::UNDEFINED) {
                 outdistribution = distribution(DISTRIBUTION::UNIFORM, 1, 1);
             }
@@ -227,7 +216,7 @@ void parse_schema(pugi::xml_node node, config::config & conf) {
 				indistribution = distribution(DISTRIBUTION::NORMAL, 0, 1);
 			}
             
-            conf.schema.add_edge(source_type, symbol, target_type, multiplicity, edgeTypeId, sf, outdistribution, indistribution, correlatedWith);
+            conf.schema.add_edge(source_type, symbol, target_type, multiplicity, edgeTypeId, sf, outdistribution, indistribution);
             //cout << "conf.add_edge "  << source_type << " " << symbol << " " << target_type << " " << multiplicity << " " << outdistribution << " " << indistribution <<endl;
             
         }
@@ -240,8 +229,8 @@ distribution parse_distribution(pugi::xml_node node) {
     if (!node.empty()) {
         string type = node.attribute("type").value();
         if (type == "uniform") {
-            size_t min = node.child("min").text().as_uint();
-            size_t max = node.child("max").text().as_uint();
+            size_t min = node.child("min").text().as_ullong();
+            size_t max = node.child("max").text().as_ullong();
             dist.type = DISTRIBUTION::UNIFORM;
             dist.arg1 = min;
             dist.arg2 = max;
@@ -260,57 +249,6 @@ distribution parse_distribution(pugi::xml_node node) {
         }
     }
     return dist;
-}
-
-
-void parse_workloads(pugi::xml_node node, config::config & conf) {
-    for (pugi::xml_node workload_node : node.children("workload")) {
-        config::workload workload;
-
-        workload.id = workload_node.attribute("id").as_uint();
-        workload.size = workload_node.attribute("size").as_uint();
-        
-        pugi::xml_node arity_node = workload_node.child("arity");
-        size_t arity_min = arity_node.attribute("min").as_uint();
-        size_t arity_max = arity_node.attribute("max").as_uint();
-        workload.arity = make_pair(arity_min, arity_max);
-        
-        workload.multiplicity = workload_node.child("multiplicity").attribute("star").as_double();
-        
-        pugi::xml_node size_node = workload_node.child("size");
-        
-        pugi::xml_node conjuncts_node = size_node.child("conjuncts");
-        size_t conjuncts_min = conjuncts_node.attribute("min").as_uint();
-        size_t conjuncts_max = conjuncts_node.attribute("max").as_uint();
-        workload.conjuncts = make_pair(conjuncts_min, conjuncts_max);
-        
-        pugi::xml_node disjuncts_node = size_node.child("disjuncts");
-        size_t disjuncts_min = disjuncts_node.attribute("min").as_uint();
-        size_t disjuncts_max = disjuncts_node.attribute("max").as_uint();
-        workload.disjuncts = make_pair(disjuncts_min, disjuncts_max);
-
-        pugi::xml_node length_node = size_node.child("length");
-        size_t length_min = length_node.attribute("min").as_uint();
-        size_t length_max = length_node.attribute("max").as_uint();
-        workload.length = make_pair(length_min, length_max);
-        
-        pugi::xml_node type_node = workload_node.child("type");
-        workload.type.chain = type_node.attribute("chain").as_bool();
-        workload.type.star = type_node.attribute("star").as_bool();
-        workload.type.cycle = type_node.attribute("cycle").as_bool();
-        workload.type.starchain = type_node.attribute("starchain").as_bool();
-        
-        pugi::xml_node output_node = workload_node.child("output");
-        workload.output.sparql = output_node.attribute("sparql").as_bool();
-        workload.output.postgres = output_node.attribute("postgres").as_bool();
-        workload.output.cypher = output_node.attribute("cypher").as_bool();
-        
-        pugi::xml_node selectivity_node = workload_node.child("selectivity");
-        workload.selectivity.constant = selectivity_node.attribute("constant").as_bool();
-        workload.selectivity.linear = selectivity_node.attribute("linear").as_bool();
-        workload.selectivity.quadratic = selectivity_node.attribute("quadratic").as_bool();        
-        conf.workloads.push_back(workload);
-    }
 }
 
 }

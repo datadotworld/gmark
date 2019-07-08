@@ -19,3 +19,4 @@ distributionAnalysis.r
 output.txt
 tempOutputFile*
 runScript.sh
+.DS_Store

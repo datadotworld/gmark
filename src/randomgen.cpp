@@ -50,7 +50,6 @@ size_t uniform_random_generator::next() {
     return (*uniform_gen)(RANDOM_GEN);
 }
 
-
 normal_random_generator::~normal_random_generator() {
     delete normal_gen;
 }
