@@ -1,7 +1,7 @@
 <generator>
 
 	<graph>
-		<nodes>2500000000</nodes>
+		<nodes>250000000</nodes>
 	</graph>
 
 	<predicates>
@@ -17,13 +17,13 @@
 		<proportion type="0">0.87</proportion>
 
 		<alias type="1">Identity</alias>
-		<proportion type="1">0.09</proportion>
+		<proportion type="1">0.08</proportion>
 
 		<alias type="2">Individual</alias>
-		<proportion type="2">0.039</proportion>
+		<proportion type="2">0.04</proportion>
 
 		<alias type="3">Household</alias>
-		<proportion type="3">0.001</proportion>
+		<proportion type="3">0.01</proportion>
 
 	</types>
 
@@ -32,14 +32,14 @@
 		<source type="0"> <!-- Observation -->
 
 			<target type="1" symbol="0" multiplicity="1"> <!-- hasIdentity -->
-				<indistribution type="uniform">
-					<min>1</min>
-					<max>1</max>
-				</indistribution>
 				<outdistribution type="uniform">
 					<min>1</min>
 					<max>1</max>
 				</outdistribution>
+				<indistribution type="gaussian">
+					<mu>10</mu>
+					<sigma>5</sigma>
+				</indistribution>
 			</target>
 
 		</source>
@@ -47,25 +47,25 @@
 		<source type="2"> <!-- Individual -->
 
 			<target type="1" symbol="0" multiplicity="1"> <!-- hasIdentity -->
-				<indistribution type="uniform">
-					<min>1</min>
-					<max>1</max>
-				</indistribution>
 				<outdistribution type="uniform">
 					<min>1</min>
 					<max>1</max>
 				</outdistribution>
+				<indistribution type="gaussian">
+					<mu>2</mu>
+					<sigma>1</sigma>
+				</indistribution>
 			</target>
 
 			<target type="3" symbol="1" multiplicity="1"> <!-- hasHousehold -->				
+				<outdistribution type="uniform">
+					<min>1</min>
+					<max>1</max>
+				</outdistribution>
 				<indistribution type="gaussian">
-					<mu>3</mu>
+					<mu>2.5</mu>
 					<sigma>1</sigma>
 				</indistribution>
-				<outdistribution type="gaussian">
-					<mu>3</mu>
-					<sigma>1</sigma>
-				</outdistribution>
 			</target>
 
 		</source>
