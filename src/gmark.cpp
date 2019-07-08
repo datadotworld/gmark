@@ -138,13 +138,9 @@ ntriple_graph_writer::ntriple_graph_writer (ostream & s) {
 }
 
 void ntriple_graph_writer::print_edge(size_t subject, size_t predicate, size_t object) {
-    *stream <<  subject << " ";
-    string alias = conf->predicates[predicate].alias;
-    if (conf->print_alias && alias.size() > 0)
-	    *stream << alias;
-    else
-        *stream << predicate;
-    *stream << " " << object << "\n";
-//    stream->flush();
+    (*stream).write(reinterpret_cast<char*>(&subject), sizeof(size_t));
+    (*stream).write(reinterpret_cast<char*>(&predicate), sizeof(size_t));
+    (*stream).write(reinterpret_cast<char*>(&object), sizeof(size_t));
 }
+
 }
