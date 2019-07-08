@@ -92,8 +92,8 @@ void parse_predicates(pugi::xml_node node, config::config & conf) {
             continue;
         }
         conf.predicates[id].proportion = proportion;
-        for (int i=0; i<conf.nb_edges.size(); i++) {
-        	conf.predicates[id].size.push_back((int) (proportion * conf.nb_edges[i]));
+        for (size_t i=0; i<conf.nb_edges.size(); i++) {
+        	conf.predicates[id].size.push_back((size_t) (proportion * conf.nb_edges[i]));
         }
     }
 }

@@ -32,14 +32,14 @@ public:
 class predicate {
 public:
    string alias;
-   vector<int> size;
+   vector<size_t> size;
    double proportion;
    predicate () {
        alias = "";
        size.push_back(0);
        proportion = 0;
     }
-   predicate (const string & alias_, vector<int> size_, double proportion_) {
+   predicate (const string & alias_, vector<size_t> size_, double proportion_) {
         alias = alias_;
         size = size_;
         proportion = proportion_;
