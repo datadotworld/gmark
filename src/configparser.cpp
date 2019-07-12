@@ -133,7 +133,6 @@ void parse_schema(pugi::xml_node node, config::config& conf) {
     }
 }
 
-
 distribution parse_distribution(pugi::xml_node node) {
     distribution dist;
     if (!node.empty()) {
