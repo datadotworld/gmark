@@ -6,20 +6,18 @@
 
 namespace configparser {
 
-int parse_config(const string& filename, config::config& conf) {
+int parse_config(config::config& conf) {
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file(filename.c_str());
+    pugi::xml_parse_result result = doc.load_file(conf.input.c_str());
 
-    if (! result) {
-        cerr << "XML [" << filename << "] parsed with errors, attr value: [" << doc.child("node").attribute("attr").value() << "]" << endl;
+    if (!result) {
+        cerr << "XML [" << conf.input << "] parsed with errors, attr value: [" << doc.child("node").attribute("attr").value() << "]" << endl;
         cerr << "Error description: " << result.description() << endl;
         cerr << "Error offset: " << result.offset << endl;   
         return 0;
     }
     
     pugi::xml_node root = doc.child("generator");
-
-    conf.input = filename;
    
     pugi::xml_node predicates = root.child("predicates");
     if (!predicates.empty()) {
@@ -72,7 +70,7 @@ void parse_types(pugi::xml_node node, config::config& conf) {
     conf.types.resize(size);
     
     for (pugi::xml_node alias_node : node.children("alias")) {
-        size_t id = alias_node.attribute("type").as_uint();//
+        size_t id = alias_node.attribute("type").as_uint();
         string name = alias_node.text().get();
         if (id < 0 || id >= size) {
             cerr << "id " << id << " is out of range" << endl;
