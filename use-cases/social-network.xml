@@ -1,9 +1,6 @@
 <!-- gMark encoding of the schema from LDBC SNB -->
 
 <generator>
-	<graph>
-		<nodes>10000</nodes>
-	</graph>
 
 	<predicates>
 		<size>27</size>

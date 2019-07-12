@@ -24,7 +24,7 @@ private:
 protected:
     config::config* conf;
 public:
-    void build_graph (config::config& conf, int graphNumber);
+    void build_graph (config::config& conf);
     void add_vertices(size_t type, size_t size);
     void add_edge(size_t subject, size_t predicate, size_t object);
     virtual void print_edge(size_t subject, size_t predicate, size_t object) = 0;

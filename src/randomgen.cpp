@@ -8,7 +8,7 @@
 
 default_random_engine RANDOM_GEN(chrono::system_clock::now().time_since_epoch().count());
 
-ostream & operator << (ostream& stream, const distribution & dist) {
+ostream& operator << (ostream& stream, const distribution& dist) {
     if (dist.type == DISTRIBUTION::UNDEFINED) {
         stream << "undefined";
         return stream;
@@ -104,7 +104,7 @@ size_t zipfian_random_generator::next() {
     }
 }
 
-random_generator * make_generator(const distribution & distrib) {
+random_generator* make_generator(const distribution& distrib) {
     switch (distrib.type){
         case DISTRIBUTION::UNIFORM:
             return new uniform_random_generator((size_t) distrib.arg1, (size_t) distrib.arg2);
@@ -112,21 +112,6 @@ random_generator * make_generator(const distribution & distrib) {
             return new normal_random_generator(distrib.arg1, distrib.arg2);
         case DISTRIBUTION::ZIPFIAN:
             return new zipfian_random_generator((size_t) distrib.arg1, distrib.arg2);
-        case DISTRIBUTION::UNDEFINED:
-            return nullptr;
-    }
-    return nullptr;
-}
-
-random_generator * make_generator_with_mean(DISTRIBUTION::type distrib_type, size_t mean) {
-    switch (distrib_type) {
-        case DISTRIBUTION::UNIFORM:
-            return new uniform_random_generator(0, mean*2);
-        case DISTRIBUTION::ZIPFIAN:
-            //return new zipfian_random_generator( ) // TODO
-            break;
-        case DISTRIBUTION::NORMAL:
-            return new normal_random_generator(mean, mean/4.0); // TODO
         case DISTRIBUTION::UNDEFINED:
             return nullptr;
     }

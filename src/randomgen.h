@@ -33,13 +33,13 @@ public:
     }
     
 
-    distribution(const distribution & o) {
+    distribution(const distribution& o) {
         type = o.type;
         arg1 = o.arg1;
         arg2 = o.arg2;
     }
     
-    distribution & operator=(const distribution & o) {
+    distribution& operator=(const distribution& o) {
         type = o.type;
         arg1 = o.arg1;
         arg2 = o.arg2;
@@ -47,7 +47,7 @@ public:
     }
 };
 
-ostream& operator<< (ostream& stream, const distribution & dist);
+ostream& operator<< (ostream& stream, const distribution& dist);
 
 double random_0_1();
 
@@ -60,7 +60,7 @@ public:
 
 class uniform_random_generator : public random_generator {
 private:
-    uniform_int_distribution<size_t> * uniform_gen;
+    uniform_int_distribution<size_t>* uniform_gen;
     
 public:
     uniform_random_generator(size_t min, size_t max);
@@ -70,7 +70,7 @@ public:
 
 class normal_random_generator : public random_generator {
 private:
-    normal_distribution<double> * normal_gen = nullptr;
+    normal_distribution<double>* normal_gen = nullptr;
     
 public:
     normal_random_generator(double mu, double sigma) {
@@ -87,8 +87,8 @@ private:
     double c;
     size_t n;
     size_t step;
-    uniform_int_distribution<size_t> * int_gen;
-    uniform_real_distribution<double> * real_distribution;
+    uniform_int_distribution<size_t>* int_gen;
+    uniform_real_distribution<double>* real_distribution;
 
 public:
     zipfian_random_generator(size_t n_, double alpha_=2.5, size_t step_=1);
@@ -96,7 +96,6 @@ public:
     size_t next();
 };
 
-random_generator * make_generator(const distribution & distrib);
-random_generator * make_generator_with_mean(DISTRIBUTION::type distrib_type, size_t mean);
+random_generator* make_generator(const distribution& distrib);
 
 #endif

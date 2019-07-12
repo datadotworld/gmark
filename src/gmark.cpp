@@ -23,12 +23,8 @@ void abstract_graph_writer::add_random_edges_simple(config::edge& c_edge) {
         size_t nb_edges = gen->next();
         for (size_t i = 0; i < nb_edges; i++) {
             size_t rnd = uniform_gen.next();
-            //size_t rnd = rand() % nb_objects; // todo
             size_t object = object_node_range.first + rnd;
-            //if (! has_edge(subject, c_edge.predicate, object)) {
             add_edge(subject, c_edge.predicate, object);
-                    //    break;
-                //}    
         }
     }
     delete gen;
@@ -80,12 +76,12 @@ void abstract_graph_writer::add_random_edges_complex(config::edge& c_edge) {
     }
 }
 
-void abstract_graph_writer::build_graph (config::config& conf, int graphNumber) {
+void abstract_graph_writer::build_graph (config::config& conf) {
     nb_nodes = 0;
     this->conf = &conf;
     size_t type = 0;
-    for (auto & typeconfig : conf.types) {
-        add_vertices(type, typeconfig.size[graphNumber]);
+    for (auto& typeconfig : conf.types) {
+        add_vertices(type, typeconfig.size);
         type++;
     }
     cout << "creating edges" << endl;

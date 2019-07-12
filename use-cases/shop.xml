@@ -1,9 +1,6 @@
 <!-- gMark encoding of the default schema from WatDiv -->
 
 <generator>
-	<graph>
-		<nodes>30000</nodes>
-	</graph>
 
 	<predicates>
 		<size>82</size>

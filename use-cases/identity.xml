@@ -1,9 +1,5 @@
 <generator>
 
-	<graph>
-		<nodes>2500000000</nodes>
-	</graph>
-
 	<predicates>
 		<size>2</size>
 		<alias symbol="0">hasObservation</alias>
