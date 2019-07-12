@@ -1,19 +1,4 @@
 #include "gmark.h"
-#include "config.h"
-
-#include <cstdlib>
-#include <vector>
-#include <utility>
-#include <map>
-#include <unordered_set>
-#include <unordered_map>
-#include <ostream>
-#include <iostream>
-#include <cmath>
-#include <random>
-#include <algorithm>
-#include <chrono>
-#include <sys/time.h>
 
 namespace graph {
 
@@ -97,19 +82,12 @@ void abstract_graph_writer::add_random_edges2(config::edge & c_edge) {
 
 void abstract_graph_writer::build_graph (config::config & conf, int graphNumber) {
     nb_nodes = 0;
-    nb_edges = 0;
-    nb_edges_by_type.resize(conf.predicates.size());
-    for (size_t i = 0; i < nb_edges_by_type.size(); i++) {
-        nb_edges_by_type[i] = 0;
-    }
     this->conf = &conf;
     size_t type = 0;
     for (auto & typeconfig : conf.types) {
         add_vertices(type, typeconfig.size[graphNumber]);
         type++;
     }
-    created_edges.clear();
-    created_edges.resize(conf.predicates.size());
     cout << "creating edges" << endl;
     for (config::edge & edge : conf.schema.edges) {
         cout << "add random edges: " << edge.subject_type << " " << edge.predicate << " " << edge.object_type << " " << edge.multiplicity << " " << edge.outgoing_distrib << " " << edge.incoming_distrib <<endl;
@@ -127,9 +105,6 @@ void abstract_graph_writer::add_vertices(size_t type, size_t size) {
 }
 
 void abstract_graph_writer::add_edge(size_t subject, size_t predicate, size_t object) {
-    created_edges[predicate]++;
-    nb_edges++;
-    nb_edges_by_type[predicate]++;
     print_edge(subject, predicate, object);
 }
 

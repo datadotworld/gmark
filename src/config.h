@@ -2,8 +2,6 @@
 #define GMARK_CONFIG_H
 
 #include "randomgen.h"
-#include <iostream>
-#include <sstream>
 
 namespace config {
 

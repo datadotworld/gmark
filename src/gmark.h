@@ -1,14 +1,10 @@
 #ifndef GMARK_H
 #define GMARK_H
 
-#include <cstdlib>
 #include <vector>
 #include <utility>
-#include <unordered_set>
-#include <unordered_map>
 #include <ostream>
 #include <iostream>
-#include <cmath>
 
 #include "randomgen.h"
 #include "config.h"
@@ -22,11 +18,8 @@ vector<size_t> generate_random_slots(pair<size_t, size_t> range, const distribut
 class abstract_graph_writer {
 private:
     size_t nb_nodes;
-    size_t nb_edges;
-    vector<size_t> nb_edges_by_type;
 
     vector<pair<size_t, size_t>> node_ranges_per_type;
-    vector<size_t> created_edges;
     
     //unordered_map<size_t, unordered_map<size_t, unordered_set<size_t>>> neighbors;
     void add_random_edges1(config::edge & c_edge);

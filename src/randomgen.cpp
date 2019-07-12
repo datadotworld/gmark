@@ -4,7 +4,6 @@
 #include <ostream>
 #include <iostream>
 #include <cmath>
-#include <random>
 #include <chrono>
 
 default_random_engine RANDOM_GEN(chrono::system_clock::now().time_since_epoch().count());
