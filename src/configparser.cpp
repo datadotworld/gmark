@@ -44,7 +44,7 @@ void parse_predicates(pugi::xml_node node, config::config& conf) {
     conf.predicate_distribution = parse_distribution(node.child("distribution"));
     
     for (pugi::xml_node alias_node : node.children("alias")) {
-        size_t id = alias_node.attribute("symbol").as_uint();//
+        size_t id = alias_node.attribute("symbol").as_uint();
         string name = alias_node.text().get();
         if (id < 0 || id >= size) {
             cerr << "id " << id << " is out of range" << endl;
@@ -117,24 +117,12 @@ void parse_schema(pugi::xml_node node, config::config& conf) {
 	for (pugi::xml_node source_node : node.children("source")) {
         size_t source_type = source_node.attribute("type").as_uint();
         for (pugi::xml_node target_node : source_node.children("target")) {
-            char multiplicity = '*';
             size_t target_type = target_node.attribute("type").as_uint();
             size_t symbol = target_node.attribute("symbol").as_uint();
-            string mult_string = target_node.attribute("multiplicity").value();
-            if (mult_string.size() > 0 && (mult_string[0] == '?' || mult_string[0] == '+' || mult_string[0] == '1')) {
-                multiplicity = mult_string[0];
-            }
             pugi::xml_node outdistribution_node = target_node.child("outdistribution");
             distribution outdistribution = parse_distribution(outdistribution_node);
             pugi::xml_node indistribution_node = target_node.child("indistribution");
             distribution indistribution = parse_distribution(indistribution_node);
-
-            if (multiplicity == '1') {
-                outdistribution = distribution(DISTRIBUTION::UNIFORM, 1, 1);
-            }
-            else if (multiplicity == '?') {
-                outdistribution = distribution(DISTRIBUTION::UNIFORM, 0, 1);
-            }
             
             if(outdistribution.type == DISTRIBUTION::UNDEFINED) {
                 outdistribution = distribution(DISTRIBUTION::ZIPFIAN, 0, 2.5);
