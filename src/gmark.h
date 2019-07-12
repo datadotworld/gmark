@@ -18,10 +18,7 @@ vector<size_t> generate_random_slots(pair<size_t, size_t> range, const distribut
 class abstract_graph_writer {
 private:
     size_t nb_nodes;
-
     vector<pair<size_t, size_t>> node_ranges_per_type;
-    
-    //unordered_map<size_t, unordered_map<size_t, unordered_set<size_t>>> neighbors;
     void add_random_edges_simple(config::edge& c_edge);
     void add_random_edges_complex(config::edge& c_edge);
 protected:
@@ -37,7 +34,6 @@ public:
 class ntriple_graph_writer : public abstract_graph_writer {
 private:
     ostream* stream;
-
 public:  
     ntriple_graph_writer (ostream& s);
     void print_edge(size_t subject, size_t predicate, size_t object);

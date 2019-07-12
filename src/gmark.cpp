@@ -90,7 +90,7 @@ void abstract_graph_writer::build_graph (config::config& conf, int graphNumber) 
     }
     cout << "creating edges" << endl;
     for (config::edge& edge : conf.schema.edges) {
-        cout << "add random edges: " << edge.subject_type << " " << edge.predicate << " " << edge.object_type << " " << edge.multiplicity << " " << edge.outgoing_distrib << " " << edge.incoming_distrib <<endl;
+        cout << "add random edges: " << edge.subject_type << " " << edge.predicate << " " << edge.object_type << " " << edge.outgoing_distrib << " " << edge.incoming_distrib <<endl;
         add_random_edges(edge);
     }
 }

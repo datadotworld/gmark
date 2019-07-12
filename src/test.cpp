@@ -39,7 +39,7 @@ int main(int argc, char ** argv) {
     }
     for (size_t i=0; i<conf.nb_graphs; i++) {
         ofstream graph_stream;
-        string fileName = graph_file + to_string(i) + ".txt";
+        string fileName = graph_file + to_string(i) + ".dat";
         graph_stream.open(fileName);
         graph::ntriple_graph_writer writer(graph_stream);
         writer.build_graph(conf, i);

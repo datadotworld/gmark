@@ -172,7 +172,6 @@ void parse_types(pugi::xml_node node, config::config & conf) {
 }
 
 void parse_schema(pugi::xml_node node, config::config & conf) {
-//    int currentEdgeTypeId = 0;
 	for (pugi::xml_node source_node : node.children("source")) {
         size_t source_type = source_node.attribute("type").as_uint();
         for (pugi::xml_node target_node : source_node.children("target")) {
@@ -180,9 +179,6 @@ void parse_schema(pugi::xml_node node, config::config & conf) {
             size_t target_type = target_node.attribute("type").as_uint();
             size_t symbol = target_node.attribute("symbol").as_uint();
             string mult_string = target_node.attribute("multiplicity").value();
-            size_t edgeTypeId = target_node.attribute("edge_type").as_uint();
-//            size_t edgeTypeId = currentEdgeTypeId;
-//            currentEdgeTypeId++;
             if (mult_string.size() > 0 && (mult_string[0] == '?' || mult_string[0] == '+' || mult_string[0] == '1')) {
                 multiplicity = mult_string[0];
             }
@@ -190,16 +186,6 @@ void parse_schema(pugi::xml_node node, config::config & conf) {
             distribution outdistribution = parse_distribution(outdistribution_node);
             pugi::xml_node indistribution_node = target_node.child("indistribution");
             distribution indistribution = parse_distribution(indistribution_node);
-            
-            pugi::xml_node sfNode = target_node.child("scalefactor");
-            int sf = 0;
-            if (!sfNode.empty()) {
-            	sf = sfNode.text().as_int();
-            	if (sf < 0) {
-            		sf = 0;
-            		cout << "The scale-factor should be greater than 0" << endl;
-            	}
-            }
 
             if (multiplicity == '1') { // && outdistribution.type == DISTRIBUTION::UNDEFINED) {
                 outdistribution = distribution(DISTRIBUTION::UNIFORM, 1, 1);
@@ -212,7 +198,7 @@ void parse_schema(pugi::xml_node node, config::config & conf) {
                 outdistribution = distribution(DISTRIBUTION::ZIPFIAN, 0, 2.5);
             }
             
-            conf.schema.add_edge(source_type, symbol, target_type, multiplicity, edgeTypeId, sf, outdistribution, indistribution);
+            conf.schema.add_edge(source_type, symbol, target_type, outdistribution, indistribution);
             //cout << "conf.add_edge "  << source_type << " " << symbol << " " << target_type << " " << multiplicity << " " << outdistribution << " " << indistribution <<endl;
             
         }

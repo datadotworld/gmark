@@ -20,5 +20,5 @@ output.txt
 tempOutputFile*
 runScript.sh
 .DS_Store
-src/graph.txt0.txt
-*.vscode/
+src/*.dat
+.vscode/
