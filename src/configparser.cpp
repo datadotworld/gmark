@@ -141,7 +141,7 @@ void parse_types(pugi::xml_node node, config::config & conf) {
         size_t id = fixed_node.attribute("type").as_uint();
         conf.types[id].size.resize(conf.nb_graphs);
 
-        size_t size2 = fixed_node.text().as_uint();
+        size_t size2 = fixed_node.text().as_ullong();
         //cout << "fixed " << id << ", " << size  << endl;
         if (id < 0 || id >= size) {
             cerr << "id " << id << " is out of range" << endl;
