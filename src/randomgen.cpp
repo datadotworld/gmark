@@ -113,9 +113,9 @@ random_generator * make_generator(const distribution & distrib) {
         case DISTRIBUTION::ZIPFIAN:
             return new zipfian_random_generator((size_t) distrib.arg1, distrib.arg2);
         case DISTRIBUTION::UNDEFINED:
-            return NULL;
+            return nullptr;
     }
-    return NULL;
+    return nullptr;
 }
 
 random_generator * make_generator_with_mean(DISTRIBUTION::type distrib_type, size_t mean) {
@@ -128,7 +128,7 @@ random_generator * make_generator_with_mean(DISTRIBUTION::type distrib_type, siz
         case DISTRIBUTION::NORMAL:
             return new normal_random_generator(mean, mean/4.0); // TODO
         case DISTRIBUTION::UNDEFINED:
-            return NULL;
+            return nullptr;
     }
-    return NULL;
+    return nullptr;
 }

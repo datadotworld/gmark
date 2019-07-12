@@ -70,7 +70,7 @@ public:
 
 class normal_random_generator : public random_generator {
 private:
-    normal_distribution<double> * normal_gen = NULL;
+    normal_distribution<double> * normal_gen = nullptr;
     
 public:
     normal_random_generator(double mu, double sigma) {
