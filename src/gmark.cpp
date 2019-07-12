@@ -2,37 +2,21 @@
 
 namespace graph {
 
-vector<size_t> generate_random_slots(pair<size_t, size_t> range, const distribution & distrib) {
-    vector<size_t> vslots;
-    random_generator * gen = make_generator(distrib);
-    for (size_t node = range.first; node <= range.second; node++) {
-        size_t nb_slots = gen->next();
-        if (distrib.type == DISTRIBUTION::ZIPFIAN) {
-        	nb_slots++;
-        }
-        for (size_t i = 0; i < nb_slots; i++) {
-            vslots.push_back(node);
-        }
-    }
-    delete gen;
-    return vslots;
-}
-
-void abstract_graph_writer::add_random_edges(config::edge & c_edge) {
+void abstract_graph_writer::add_random_edges(config::edge& c_edge) {
     if (c_edge.incoming_distrib.type == DISTRIBUTION::UNDEFINED) {
-        add_random_edges1(c_edge);
+        add_random_edges_simple(c_edge);
     } else {
-        add_random_edges2(c_edge);
+        add_random_edges_complex(c_edge);
     }
 }
 
-void abstract_graph_writer::add_random_edges1(config::edge & c_edge) {
+void abstract_graph_writer::add_random_edges_simple(config::edge& c_edge) {
     auto object_node_range = node_ranges_per_type[c_edge.object_type];
     size_t nb_objects = 1 + object_node_range.second - object_node_range.first;
     if(c_edge.outgoing_distrib.type == DISTRIBUTION::ZIPFIAN && c_edge.outgoing_distrib.arg1 == 0) {
         c_edge.outgoing_distrib.arg1 = nb_objects;
     }
-    random_generator * gen = make_generator(c_edge.outgoing_distrib);
+    random_generator* gen = make_generator(c_edge.outgoing_distrib);
     uniform_random_generator uniform_gen(0, nb_objects);
     auto subject_node_range = node_ranges_per_type[c_edge.subject_type];
     for (size_t subject = subject_node_range.first; subject <= subject_node_range.second; subject++) {
@@ -50,7 +34,23 @@ void abstract_graph_writer::add_random_edges1(config::edge & c_edge) {
     delete gen;
 }
 
-void abstract_graph_writer::add_random_edges2(config::edge & c_edge) {
+vector<size_t> generate_random_slots(pair<size_t, size_t> range, const distribution& distrib) {
+    vector<size_t> vslots;
+    random_generator* gen = make_generator(distrib);
+    for (size_t node = range.first; node <= range.second; node++) {
+        size_t nb_slots = gen->next();
+        if (distrib.type == DISTRIBUTION::ZIPFIAN) {
+        	nb_slots++;
+        }
+        for (size_t i = 0; i < nb_slots; i++) {
+            vslots.push_back(node);
+        }
+    }
+    delete gen;
+    return vslots;
+}
+
+void abstract_graph_writer::add_random_edges_complex(config::edge& c_edge) {
     if(c_edge.outgoing_distrib.type == DISTRIBUTION::ZIPFIAN) {
         if(c_edge.outgoing_distrib.arg1 == 0) {
             auto object_node_range = node_ranges_per_type[c_edge.object_type];
@@ -80,7 +80,7 @@ void abstract_graph_writer::add_random_edges2(config::edge & c_edge) {
     }
 }
 
-void abstract_graph_writer::build_graph (config::config & conf, int graphNumber) {
+void abstract_graph_writer::build_graph (config::config& conf, int graphNumber) {
     nb_nodes = 0;
     this->conf = &conf;
     size_t type = 0;
@@ -89,7 +89,7 @@ void abstract_graph_writer::build_graph (config::config & conf, int graphNumber)
         type++;
     }
     cout << "creating edges" << endl;
-    for (config::edge & edge : conf.schema.edges) {
+    for (config::edge& edge : conf.schema.edges) {
         cout << "add random edges: " << edge.subject_type << " " << edge.predicate << " " << edge.object_type << " " << edge.multiplicity << " " << edge.outgoing_distrib << " " << edge.incoming_distrib <<endl;
         add_random_edges(edge);
     }
@@ -108,7 +108,7 @@ void abstract_graph_writer::add_edge(size_t subject, size_t predicate, size_t ob
     print_edge(subject, predicate, object);
 }
 
-ntriple_graph_writer::ntriple_graph_writer (ostream & s) {
+ntriple_graph_writer::ntriple_graph_writer (ostream& s) {
     stream = &s;
 }
 

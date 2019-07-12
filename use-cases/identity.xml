@@ -1,13 +1,13 @@
 <generator>
 
 	<graph>
-		<nodes>2500000</nodes>
+		<nodes>2500000000</nodes>
 	</graph>
 
 	<predicates>
 		<size>2</size>
-		<alias symbol="0">hasIdentity</alias>
-		<alias symbol="1">hasHousehold</alias>
+		<alias symbol="0">hasObservation</alias>
+		<alias symbol="1">hasIndividual</alias>
 	</predicates>
 
 	<types>
@@ -29,43 +29,36 @@
 
 	<schema>
 
-		<source type="0"> <!-- Observation -->
+ 		<!-- Identity -->
+		<source type="1">
 
-			<target type="1" symbol="0" multiplicity="1"> <!-- hasIdentity -->
-				<outdistribution type="uniform">
-					<min>1</min>
-					<max>1</max>
-				</outdistribution>
-				<indistribution type="gaussian">
+ 			<!-- hasObservation -->
+			<target type="0" symbol="0">
+				<outdistribution type="gaussian">
 					<mu>10</mu>
 					<sigma>5</sigma>
-				</indistribution>
+				</outdistribution>
+			</target>
+
+ 			<!-- hasIndividual -->
+			<target type="2" symbol="1">
+				<outdistribution type="gaussian">
+					<mu>2</mu>
+					<sigma>1</sigma>
+				</outdistribution>
 			</target>
 
 		</source>
 
-		<source type="2"> <!-- Individual -->
+ 		<!-- Household -->
+		<source type="3">
 
-			<target type="1" symbol="0" multiplicity="1"> <!-- hasIdentity -->
-				<outdistribution type="uniform">
-					<min>1</min>
-					<max>1</max>
-				</outdistribution>
-				<indistribution type="gaussian">
-					<mu>2</mu>
-					<sigma>1</sigma>
-				</indistribution>
-			</target>
-
-			<target type="3" symbol="1" multiplicity="1"> <!-- hasHousehold -->				
-				<outdistribution type="uniform">
-					<min>1</min>
-					<max>1</max>
-				</outdistribution>
-				<indistribution type="gaussian">
+ 			<!-- hasIndividual -->
+			<target type="2" symbol="1">
+				<outdistribution type="gaussian">
 					<mu>2.5</mu>
 					<sigma>1</sigma>
-				</indistribution>
+				</outdistribution>
 			</target>
 
 		</source>
